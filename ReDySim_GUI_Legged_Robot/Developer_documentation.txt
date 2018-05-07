@@ -1,0 +1,80 @@
+ReDySim Documentation (Only for GUI):
+Files added:  create_variable_file.m, home_screen.m, home_screen.fig, inputs.m, simulating_popup.fig, simulating_popup.m, inupts.mat.
+
+1) Create_variable_file.m:	
+	It will create inputs.mat file with some default values of the system variables.
+	The arguments are n (number of links) and type (type of the system: 0 for open loop and 1 for closed loop system).
+
+2) home_screen.m:
+	This is the main file responsible for the functioning of the GUI. The functions contained in are namely:
+	a)	read_file_table:
+		This function will load all the values in the inputs.mat file, inside the selected module and load them into the table visible in the GUI (uitable1) and other fields like n, 		dof, gx, gy, gz, etc.
+
+	b)	write_input_file:
+		This function will write all the values in the table and the dialog boxes like n, dof, gx, gy, gz into the .mat file.
+
+	c)	Inflate_available_examples:
+		This function reads the users selection in the drop down menus of “System type: fixed_base_v1, etc,”, and “Analysis type:  inverse dynamics, forward dynamics” and then 		inflate the list of available examples.
+
+	d)	copy_file:
+		Arguments: handles, name (Name of the file to be copied) , folder (The selected Example)
+		This is a helper function which copies files from the example folder into the module folder.
+
+	e)	load_input:
+		This function copies the variables from the inputs.m file inside the examples into the inputs.mat file inside the module. After copying the variables it will load the 		inputs.mat file in the table by calling read_file_table().
+	
+	f)	Copy_example_files:
+		This function will copy the files inside the selected example folder into the selected module folder skipping the inputs.m file.
+
+	
+	g)	Plot_energy:
+		This function will call the modified plot_en function within the module.
+
+	h)	Animate_linker:
+		This function will call the animate function within the module.
+	
+	i)	Plot_acc_tor:
+		This function will joint torques and accelerations.
+
+	j)	Plot_motion:
+		This function will plot joint angles and joint velocities.
+
+	k)	home_screen_OpeningFcn:
+		This function is the default function which is called when the GUI is loaded.
+		It will inflate the system types and the examples into the drop down menus. Also it will fill table with the values inside the inputs.mat file of the default selected module.
+
+	l)	edit_n_Callback:	// has some issues
+		This function is called when changing the value of n, in the parameters of the system. It will automatically update the values on the file “input.mat” and load the new values into the tables.
+
+	m)	save_table_button_Callback:
+		This function is called when save button is pressed. It calls the function write_input_file() which is discussed above.
+
+	n)	Reset_button_callback:
+		This function is called when reset button is pressed. It will revert all the values which are not saved into the inputs.mat file.
+		It works by calling the function : read_file_table().
+	
+	o)	popupmenu1_Callback:
+		This function is called when the module type is selected (eg: fixed_base_v1).
+		It works by calling the inflate_available_examples(); 
+
+	p)	popupmenu2_Callback:
+		This function is called when the example is selected from the examples dropdown list.
+		It calls copy_example_files() and load_input().
+
+	q)	simulate_button_Callback:
+		This function is automatically called when the simulate button is pressed. It will launch the simulating_popup and call the runfor() or runinv() function within the module.
+
+	r)	plot_button_Callback:
+		This function is called when the plot button is pressed.
+		It will plot the graph depending on the option which is selected (eg: acceleration, trajectory, etc.) by calling the respective function.
+
+	s)	animate_button_Callback:
+		This function is called when the animation button is pressed. It calls the animate_linker() function which is discussed above.
+
+3) Inputs.m:
+	This file will return the values stored inside the ‘inputs.mat’ file. This file substitutes the original ‘inputs.m’ file available in the examples folder.
+
+4) Simulating_popup.m:
+	This is the m file for the Simulating popup.
+
+	# All the .fig files are directly editable by ‘guide’ (The inbuilt GUI editor of Matlab).

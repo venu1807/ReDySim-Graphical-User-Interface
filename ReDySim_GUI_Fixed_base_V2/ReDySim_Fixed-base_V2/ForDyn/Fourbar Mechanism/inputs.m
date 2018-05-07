@@ -1,0 +1,27 @@
+function [n dof type alp a b th bt r dx dy dz m g  Icxx Icyy Iczz Icxy Icyz Iczx aj al Tp steps]=inputs()
+inputs_file = load ('inputs.mat');
+n = inputs_file.n;
+dof = inputs_file.dof;
+type = inputs_file.type;
+alp = inputs_file.alp;
+a = inputs_file.a;
+b = inputs_file.b;
+th=inputs_file.th;
+bt = inputs_file.bt;
+r=inputs_file.r;
+dx = inputs_file.dx;
+dy = inputs_file.dy;
+dz = inputs_file.dz;
+m = inputs_file.m;
+g = inputs_file.g;
+Icxx = inputs_file.Icxx;
+Icyy = inputs_file.Icyy;
+Iczz = inputs_file.Iczz;
+Icxy = inputs_file.Icxy;
+Icyz = inputs_file.Icyz;
+Iczx = inputs_file.Iczx;
+aj = inputs_file.aj;
+al = inputs_file.al;
+Tp = inputs_file.Tp;
+steps = inputs_file.steps;
+end
