@@ -22,7 +22,7 @@ function varargout = home_screen(varargin)
 
 % Edit the above text to modify the response to help home_screen
 
-% Last Modified by GUIDE v2.5 23-Apr-2018 12:02:07
+% Last Modified by GUIDE v2.5 10-May-2018 10:56:15
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -74,6 +74,8 @@ function read_file_table(handles)
     set(handles.edit_dof,'string',handles.dof);
     set(handles.edit_n,'string',handles.n);
     set(handles.edit_type,'string',handles.type);
+    set(handles.edit_Tp,'string',handles.Tp);
+    set(handles.edit_steps,'string',handles.steps);
     
 %     [system_type, analysis_type] = inflate_available_examples1(handles);
 %     cd(system_type);
@@ -98,10 +100,28 @@ function write_input_file(handles)
     gx = get(handles.edit_gx, 'string');
     gy = get(handles.edit_gy, 'string');
     gz = get(handles.edit_gz, 'string');
+    n = get(handles.edit_n, 'string');
+    Tp = get(handles.edit_Tp, 'string');
+    steps = get(handles.edit_steps, 'string');
    
     [dof, status] = str2num(dof);
     if status==0 || dof < 0
         dof = 1;
+    end
+    
+    [n, status] = str2num(n);
+    if status==0 || n < 0
+        n = 0;
+    end
+    
+    [Tp, status] = str2num(Tp);
+    if status==0 || Tp < 0
+        Tp = 0;
+    end
+    
+    [steps, status] = str2num(steps);
+    if status==0 || steps < 0
+        steps = 0;
     end
     
     [gx, status] = str2num(gx);
@@ -145,8 +165,9 @@ function write_input_file(handles)
     inputs_file.gx = gx;
     inputs_file.gy = gy;
     inputs_file.gz = gz;
-%     inputs_file.Tp = Tp;
-%     inputs_file.steps = steps;
+    inputs_file.n = n;
+    inputs_file.Tp = Tp;
+    inputs_file.steps = steps;
    
    
 
@@ -167,6 +188,8 @@ function Save_input_file(handles)
     gy = get(handles.edit_gy, 'string');
     gz = get(handles.edit_gz, 'string');
     n = get(handles.edit_n , 'string');
+    Tp = get(handles.edit_Tp , 'string');
+    steps = get(handles.edit_steps , 'string');
     type = get(handles.edit_type,'string');
     
     [dof, status] = str2num(dof);
@@ -192,6 +215,16 @@ function Save_input_file(handles)
     [n, status] = str2num(n);
     if status==0
         n = 0;
+    end
+    
+    [Tp, status] = str2num(Tp);
+    if status==0
+        Tp = 0;
+    end
+    
+    [steps, status] = str2num(steps);
+    if status==0
+        steps = 0;
     end
     
     [type, status] = str2num(type);
@@ -227,8 +260,9 @@ function Save_input_file(handles)
    gz = gz;
    n = n;
    type = type;
-   Tp = 10;
-   steps = 0.01;
+   Tp = Tp;
+   steps = steps;
+   
    g=[gx;gy;gz];
    
    uisave({'alp','n','a','b', 'type', 'th', 'bt', 'r', 'dx', 'dy', 'dz', 'm' ,'g' ,'Icxx', 'Icyy' ,'Iczz', 'Icxy', 'Icyz', 'Iczx', 'aj', 'al', 'dof', 'Tp', 'steps'},'inputs')
@@ -898,8 +932,7 @@ guidata(hObject, handles);
 %colnames = {'Voltage','Time'};
 %set(handles.uitable1,'data',Data,'ColumnName',colnames);
     
-    
-files = dir(fullfile(pwd) ) ;
+files = dir(fullfile(pwd)) ;
 dir_flags = [files.isdir];
 files = files(dir_flags);
 files = files(3:size(files));
@@ -1340,13 +1373,13 @@ function edit_Tp_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'String') returns contents of edit_Tp as text
 %        str2double(get(hObject,'String')) returns contents of edit_Tp as a double
 
-Tp = get(handles.edit_Tp, 'String');
-[Tp, status] = str2num(Tp);
-if status==0 || Tp <= 0  
-    Tp = 1;
-end
-create_variable_file(Tp, 0);
-read_file_table(handles);
+% Tp = get(handles.edit_Tp, 'String');
+% [Tp, status] = str2num(Tp);
+% if status==0 || Tp <= 0  
+%     Tp = 1;
+% end
+% create_variable_file(Tp, 0);
+% read_file_table(handles);
 
 % --- Executes during object creation, after setting all properties.
 function edit_Tp_CreateFcn(hObject, eventdata, handles)
@@ -1369,13 +1402,13 @@ function edit_steps_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'String') returns contents of edit_steps as text
 %        str2double(get(hObject,'String')) returns contents of edit_steps as a double
-steps = get(handles.edit_steps, 'String');
-[steps, status] = str2num(steps);
-if status==0 || steps <= 0  
-    steps = 1;
-end
-create_variable_file(steps, 0);
-read_file_table(handles);
+% steps = get(handles.edit_steps, 'String');
+% [steps, status] = str2num(steps);
+% if status==0 || steps <= 0  
+%     steps = 1;
+% end
+% create_variable_file(steps, 0);
+% read_file_table(handles);
 
 
 % --- Executes during object creation, after setting all properties.
